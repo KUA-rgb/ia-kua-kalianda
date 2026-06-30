@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: ia_kua_db
+    environment:
+      POSTGRES_USER: kua_user
+      POSTGRES_PASSWORD: kua_password
+      POSTGRES_DB: ia_kua_kalianda
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - ia_network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ia_kua_backend
+    environment:
+      DATABASE_URL: postgresql://kua_user:kua_password@db:5432/ia_kua_kalianda
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - ia_network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: ia_kua_frontend
+    environment:
+      VITE_API_URL: http://localhost:8000
+    ports:
+      - "3000:5173"
+    networks:
+      - ia_network
+
+volumes:
+  postgres_data:
+
+networks:
+  ia_network:
+    driver: bridge

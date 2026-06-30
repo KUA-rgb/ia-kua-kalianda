@@ -1,0 +1,24 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.home {
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.home h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.home p {
+  font-size: 1.1rem;
+  color: #666;
+}
